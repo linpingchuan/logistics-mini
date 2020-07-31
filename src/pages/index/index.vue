@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <van-button round type="primary" size="small">测试</van-button>
+  </div>
 </template>
 
 <script>

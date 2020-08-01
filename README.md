@@ -1,4 +1,4 @@
-# logistics-mini d
+# logistics-mini
 
 > 微信盛夏货代小程序
 

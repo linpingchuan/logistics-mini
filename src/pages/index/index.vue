@@ -18,8 +18,21 @@ export default {
     wx.login({
       success(res){
         if(res.code){
-          
-          console.log(res)
+          console.log('xx',res)
+          console.log(wx)
+          wx.request({
+              url:'http://localhost:8084/logistics'+'/mini-program/wx323ba9b4db4945e3/login',
+              method:'PUT',
+              data:{
+                code:res.code
+              },
+              header: {
+                'content-type': 'application/x-www-form-urlencoded',
+              },
+              success:(res)=>{
+                console.log(res)
+              }
+            });
         }
       }
     })

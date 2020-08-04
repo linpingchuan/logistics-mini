@@ -1,9 +1,9 @@
-function formatNumber (n) {
+function formatNumber(n) {
   const str = n.toString()
   return str[1] ? str : `0${str}`
 }
 
-export function formatTime (date) {
+export function formatTime(date) {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -18,7 +18,9 @@ export function formatTime (date) {
   return `${t1} ${t2}`
 }
 
+const host = process.env.api
 export default {
   formatNumber,
-  formatTime
+  formatTime,
+  host
 }

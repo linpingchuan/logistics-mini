@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import utils from '@/utils/index'
 export default {
   data () {
     return {
@@ -15,12 +16,11 @@ export default {
     
   },
   mounted(){
-    console.log(this.$host)
     wx.login({
       success(res){
         if(res.code){
           wx.request({
-              url:this.$host+'/mini-program/wx323ba9b4db4945e3/login',
+              url:utils.host+'/mini-program/wx323ba9b4db4945e3/login',
               method:'PUT',
               data:{
                 code:res.code

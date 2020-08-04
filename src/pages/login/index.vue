@@ -15,12 +15,12 @@ export default {
     
   },
   mounted(){
-    console.log(this.$host)
     wx.login({
       success(res){
         if(res.code){
+          console.log(process.env)
           wx.request({
-              url:this.$host+'/mini-program/wx323ba9b4db4945e3/login',
+              url:'http://localhost:8084/logistics'+'/mini-program/wx323ba9b4db4945e3/login',
               method:'PUT',
               data:{
                 code:res.code

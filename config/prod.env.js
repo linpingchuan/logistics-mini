@@ -1,4 +1,4 @@
 module.exports = {
   NODE_ENV: '"production"',
-  api:'foreverhot.club'
+  api:'"foreverhot.club"'
 }

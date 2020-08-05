@@ -29,7 +29,12 @@ export default {
                 'content-type': 'application/x-www-form-urlencoded',
               },
               success:(res)=>{
-                console.log(res)
+                if(res.data.type=='error'){
+                  wx.navigateTo({
+                    url:'login'
+                  })
+                }
+                
               }
             });
         }

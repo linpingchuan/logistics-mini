@@ -31,7 +31,7 @@ export default {
               success:(res)=>{
                 if(res.data.type=='error'){
                   wx.navigateTo({
-                    url:'login'
+                    url:'/pages/login/main'
                   })
                 }
                 

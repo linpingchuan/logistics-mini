@@ -30,7 +30,10 @@ export default {
               },
               success:(res)=>{
                 if(res.data.type=='error'){
-                  wx.navigateTo({
+                  // wx.navigateTo({
+                  //   url:'/pages/login/main'
+                  // })
+                  mpvue.navigateTo({
                     url:'/pages/login/main'
                   })
                 }

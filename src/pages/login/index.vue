@@ -1,6 +1,30 @@
 <template>
   <div>
-    <van-button round type="primary" size="small">测试</van-button>
+    <van-notice-bar left-icon="volume-o" text="关注【盛夏跨境】公众号，可以获取最新的功能使用教程哦~ 🍻" speed="20" />
+    <div class="login-container">
+      <div class="login-module">
+        <div class="login-title">
+          <p>盛夏物流平台</p>
+        </div>
+        <van-cell-group>
+          <van-field required :value="account" label="手机号" placeholder="请输入手机号" />
+          <van-field :value="password" label="密码" placeholder="请输入密码" required password>
+            <van-button slot="button" size="small" type="primary">登录</van-button>
+          </van-field>
+        </van-cell-group>
+        <div style="margin-top:10px;">
+          <div class="login-footer">
+            <p>若用户未注册，请用电脑前往【盛夏物流平台】进行注册</p>
+          </div>
+          <div class="login-footer">
+            <p>
+              盛夏物流平台网址（长按复制）：
+              <text style="color:red;" selectable="true">https://foreverhot.club/l/index.html</text>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -8,47 +32,18 @@
 export default {
   data () {
     return {
-      
+      data:'',
+      password:''
     }
   },
   components: {
     
   },
   mounted(){
-    wx.login({
-      success(res){
-        if(res.code){
-          console.log(process.env)
-          wx.request({
-              url:'http://localhost:8084/logistics'+'/mini-program/wx323ba9b4db4945e3/login',
-              method:'PUT',
-              data:{
-                code:res.code
-              },
-              header: {
-                'content-type': 'application/x-www-form-urlencoded',
-              },
-              success:(res)=>{
-                console.log(res)
-              }
-            });
-        }
-      }
-    })
+    
   },
   methods: {
-    bindViewTap () {
-      const url = '../logs/main'
-      if (mpvuePlatform === 'wx') {
-        mpvue.switchTab({ url })
-      } else {
-        mpvue.navigateTo({ url })
-      }
-    },
-    clickHandle (ev) {
-      console.log('clickHandle:', ev)
-      // throw {message: 'custom test'}
-    }
+    
   },
 
   created () {
@@ -58,6 +53,32 @@ export default {
 </script>
 
 <style scoped>
+.login-container {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  align-items: center;
+}
+.login-module {
+  margin-top: -28vh;
+}
+.login-title {
+  color: rgb(25, 137, 250);
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: start;
+  margin: 2vh 0 2vh 1vw;
+}
+.login-footer {
+  color: rgba(69, 90, 100, 0.6);
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: start;
+  margin: 4px 0 4px 1vw;
+}
+
 .userinfo {
   display: flex;
   flex-direction: column;

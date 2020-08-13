@@ -8,8 +8,22 @@
           <p>盛夏物流平台</p>
         </div>
         <van-cell-group>
-          <van-field required :value="account.account" label="手机号" placeholder="请输入手机号" />
-          <van-field :value="account.password" label="密码" placeholder="请输入密码" required password>
+          <van-field
+            required
+            :value="account.tel"
+            label="手机号"
+            maxlength="11"
+            @change="changePhone"
+            placeholder="请输入手机号"
+          />
+          <van-field
+            :value="account.accountPassword"
+            label="密码"
+            placeholder="请输入密码"
+            @change="changeAccountPassword"
+            required
+            password
+          >
             <van-button slot="button" size="small" type="primary" @click="onClickLogin">登录</van-button>
           </van-field>
         </van-cell-group>
@@ -36,8 +50,9 @@ export default {
   data () {
     return {
       account:{
-        account:'',
-        password:''
+        tel:'',
+        accountPassword:'',
+        wxOpenId:''
       }
     }
   },
@@ -47,20 +62,47 @@ export default {
   mounted(){
   },
   methods: {
+    changePhone(e) {
+                this.account.tel = e.mp.detail
+            },
+    changeAccountPassword(e) {
+                this.account.accountPassword = e.mp.detail
+            },
     onClickLogin(){
-      if(this.account.account.trim()==''||this.account.password.trim()==''){
-        Notify('账号/密码都不能为空')
-        return
-      }
-      wx.request({
-        url:utils.host+'/login-with-account',
-        method:'PUT',
-        data:this.account,
-        success:(res)=>{
-          let _res=res.data;
-          console.log(_res)
-        }
+      if(!this.account.tel){
+            Notify('账号/密码都不能为空')
+            return
+          }
+          if(this.account.accountPassword==''){
+            Notify('账号/密码都不能为空')
+            return
+          }
+          let that=this;
+      wx.login({
+      success(res){
+        if(res.code){
+          that.account.wxOpenId=res.code;
+          wx.request({
+            url:utils.host+'/login-with-account',
+            method:'PUT',
+            data:that.account,
+            success:(res)=>{
+              res=res.data;
+              if(res.type=='error'){
+                Notify(res.content)
+              }else{
+                wx.setStorageSync('accountKey',res.data)
+                wx.redirectTo({
+                  url:'/pages/recharge/main'
+                })
+
+              }
+          }
       })
+        }
+      }
+      })
+      
     }
   },
 

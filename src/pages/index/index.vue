@@ -33,7 +33,7 @@ export default {
                   // wx.navigateTo({
                   //   url:'/pages/login/main'
                   // })
-                  mpvue.navigateTo({
+                  mpvue.redirectTo({
                     url:'/pages/login/main'
                   })
                 }

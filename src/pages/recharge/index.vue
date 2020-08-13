@@ -3,12 +3,28 @@
     <van-notify id="van-notify" />
     <van-notice-bar left-icon="volume-o" text="关注【盛夏跨境】公众号，可以获取最新的货代功能使用教程哦~ 🍻" speed="20" />
     <div class="rechage-container">
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">10元</van-button>
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">50元</van-button>
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">100元</van-button>
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">300元</van-button>
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">500元</van-button>
-      <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">5000元</van-button>
+      <van-row>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">10元</van-button>
+        </van-col>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">50元</van-button>
+        </van-col>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">100元</van-button>
+        </van-col>
+      </van-row>
+      <van-row>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">200元</van-button>
+        </van-col>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">500元</van-button>
+        </van-col>
+        <van-col span="8">
+          <van-button color="linear-gradient(to right, #4bb0ff, #6149f6)">3000元</van-button>
+        </van-col>
+      </van-row>
     </div>
   </div>
 </template>
@@ -66,9 +82,9 @@ export default {
 
 <style scoped>
 .rechage-container {
-  display: flex;
+  /* display: flex;
   justify-content: center;
   height: 100vh;
-  align-items: center;
+  align-items: center; */
 }
 </style>

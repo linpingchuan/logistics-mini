@@ -1,5 +1,6 @@
 <template>
   <div>
+    <van-notify id="van-notify" />
     <van-notice-bar left-icon="volume-o" text="关注【盛夏跨境】公众号，可以获取最新的功能使用教程哦~ 🍻" speed="20" />
     <div class="login-container">
       <div class="login-module">
@@ -7,9 +8,9 @@
           <p>盛夏物流平台</p>
         </div>
         <van-cell-group>
-          <van-field required :value="account" label="手机号" placeholder="请输入手机号" />
-          <van-field :value="password" label="密码" placeholder="请输入密码" required password>
-            <van-button slot="button" size="small" type="primary">登录</van-button>
+          <van-field required :value="account.account" label="手机号" placeholder="请输入手机号" />
+          <van-field :value="account.password" label="密码" placeholder="请输入密码" required password>
+            <van-button slot="button" size="small" type="primary" @click="onClickLogin">登录</van-button>
           </van-field>
         </van-cell-group>
         <div style="margin-top:10px;">
@@ -29,21 +30,38 @@
 </template>
 
 <script>
+import utils from '@/utils/index'
+import Notify from '../../../static/vant/notify/notify';
 export default {
   data () {
     return {
-      data:'',
-      password:''
+      account:{
+        account:'',
+        password:''
+      }
     }
   },
   components: {
     
   },
   mounted(){
-    
   },
   methods: {
-    
+    onClickLogin(){
+      if(this.account.account.trim()==''||this.account.password.trim()==''){
+        Notify('账号/密码都不能为空')
+        return
+      }
+      wx.request({
+        url:utils.host+'/login-with-account',
+        method:'PUT',
+        data:this.account,
+        success:(res)=>{
+          let _res=res.data;
+          console.log(_res)
+        }
+      })
+    }
   },
 
   created () {

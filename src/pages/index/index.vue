@@ -20,7 +20,7 @@ export default {
       success(res){
         if(res.code){
           wx.request({
-              url:utils.host+'/mini-program/wx323ba9b4db4945e3/login',
+              url:utils.host+'/login',
               method:'PUT',
               data:{
                 code:res.code

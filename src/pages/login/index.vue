@@ -31,10 +31,10 @@
           <div class="login-footer">
             <p>若用户未注册，请用电脑前往【盛夏物流平台】进行注册</p>
           </div>
-          <div class="login-footer">
+          <div class="login-footer" @click="copyUrl">
             <p>
-              盛夏物流平台网址（长按复制）：
-              <text style="color:red;" selectable="true">https://foreverhot.club/l/index.html</text>
+              盛夏物流平台网址（点击复制）：
+              <text style="color:red;" selectable="true">https://l.foreverhot.icu</text>
             </p>
           </div>
         </div>
@@ -62,12 +62,27 @@ export default {
   mounted(){
   },
   methods: {
+    copyUrl(){
+      let text="https://l.foreverhot.icu"
+      wx.setClipboardData({
+            data: text,
+            success: function (res) {
+              wx.getClipboardData({
+                success: function (res) {
+                  wx.showToast({
+                    title: '复制成功'
+                  })
+                }
+              })
+            }
+    })
+    },
     changePhone(e) {
-                this.account.tel = e.mp.detail
-            },
+      this.account.tel = e.mp.detail
+    },
     changeAccountPassword(e) {
-                this.account.accountPassword = e.mp.detail
-            },
+      this.account.accountPassword = e.mp.detail
+    },
     onClickLogin(){
       if(!this.account.tel){
             Notify('账号/密码都不能为空')

@@ -34,7 +34,7 @@
       <van-button round type="danger" icon="gold-coin-o" @click="onClickRecharge(6000)">6000元</van-button>
     </div>
     <div class="notice-container">
-      <p>📌 请直接点击上方任意面值进行充值</p>
+      <p>📌 请直接点击上方任意面值进行充值，最晚十五分钟内到账</p>
       <p>📌 注意，为了避免打包失败，中大型店铺请直接点击6000元面值进行充值</p>
       <p>📌 小夏温馨提示您，邀请新虾皮卖家入驻盛夏物流平台即可获得积分哦~</p>
     </div>

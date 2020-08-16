@@ -75,14 +75,7 @@ export default {
     },
     onLogin(){
       let that=this;
-      if(!wx.getStorageSync('accountKey')){
-        mpvue.redirectTo({
-          url:'/pages/login/main'
-        })
-        that.showOverLay=false
-        return
-      }
-        wx.login({
+      wx.login({
         success(res){
           if(res.code){
             wx.request({

@@ -8,6 +8,8 @@
         "van-field": "/static/vant/field/index",
         "van-picker": "/static/vant/field/index",
         "van-dialog": "/static/vant/dialog/index",
-        "van-toast": "/static/vant/toast/index"
+        "van-toast": "/static/vant/toast/index",
+        "van-tabbar": "/static/vant/tabbar/index",
+        "van-tabbar-item": "/static/vant/tabbar-item/index"
     }
 }

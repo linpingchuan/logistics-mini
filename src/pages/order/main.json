@@ -15,8 +15,6 @@
         "van-notify": "/static/vant/notify/index",
         "van-loading": "/static/vant/loading/index",
         "van-overlay": "/static/vant/overlay/index",
-        "van-panel": "/static/vant/panel/index",
-        "van-tabbar": "/static/vant/tabbar/index",
-        "van-tabbar-item": "/static/vant/tabbar-item/index"
+        "van-panel": "/static/vant/panel/index"
     }
 }

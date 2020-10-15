@@ -24,6 +24,8 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "@vant/weapp": "^1.5.2",
+    "miniprogram-sm-crypto": "^0.2.1",
     "mpvue": "^2.0.0",
     "vuex": "^3.0.1"
   },
@@ -90,5 +92,17 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".eslintrc.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab:linpingchuan/logistics-mini.git"
+  },
+  "keywords": [
+    "logistics-mini"
+  ],
+  "license": "ISC"
 }

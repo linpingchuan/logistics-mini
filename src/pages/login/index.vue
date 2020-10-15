@@ -27,11 +27,11 @@
             <van-button slot="button" size="small" type="primary" @click="onClickLogin">登录</van-button>
           </van-field>
         </van-cell-group>
-        <div style="margin-top:10px;">
+        <div style="margin-top:10px;" @click="copyUrl">
           <div class="login-footer">
             <p>若用户未注册，请用电脑前往【盛夏物流平台】进行注册</p>
           </div>
-          <div class="login-footer" @click="copyUrl">
+          <div class="login-footer">
             <p>
               盛夏物流平台网址（点击复制）：
               <text style="color:red;" selectable="true">https://l.foreverhot.icu</text>
@@ -54,6 +54,20 @@ export default {
         accountPassword:'',
         wxOpenId:''
       }
+    }
+  },
+  onShareAppMessage(res){
+    return {
+      title: '虾皮货代就找盛夏物流，安全靠谱，快来一起大卖吧！',
+      path: '/pages/recharge/main',
+      imageUrl: 'https://l.foreverhot.icu/share_mini.jpg'
+    }
+  },
+  onShareTimeline(res){
+    return {
+      title: '虾皮货代就找盛夏物流，安全靠谱，快来一起大卖吧！',
+      query:'',
+      imageUrl: 'https://l.foreverhot.icu/share_mini.jpg'
     }
   },
   components: {

@@ -1,6 +1,10 @@
 <template>
   <div>
-    <van-button round type="primary" size="small">测试</van-button>
+    <van-tabbar :active="active" @change="onChangeTab">
+  <van-tabbar-item  icon="gold-coin-o">充值</van-tabbar-item>
+  <van-tabbar-item icon="bag-o">订单</van-tabbar-item>
+  
+</van-tabbar>
   </div>
 </template>
 
@@ -9,11 +13,25 @@ import utils from '@/utils/index'
 export default {
   data () {
     return {
-      
+      active:0
     }
   },
   components: {
     
+  },
+  onShareAppMessage(res){
+    return {
+      title: '虾皮货代就找盛夏物流，安全靠谱，快来一起大卖吧！',
+      path: '/pages/recharge/main',
+      imageUrl: 'https://l.foreverhot.icu/share_mini.jpg'
+    }
+  },
+  onShareTimeline(res){
+    return {
+      title: '虾皮货代就找盛夏物流，安全靠谱，快来一起大卖吧！',
+      query:'',
+      imageUrl: 'https://l.foreverhot.icu/share_mini.jpg'
+    }
   },
   mounted(){
     wx.login({
@@ -30,14 +48,10 @@ export default {
               },
               success:(res)=>{
                 if(res.data.type=='error'){
-                  // wx.navigateTo({
-                  //   url:'/pages/login/main'
-                  // })
                   mpvue.redirectTo({
                     url:'/pages/login/main'
                   })
                 }
-                
               }
             });
         }
@@ -56,7 +70,10 @@ export default {
     clickHandle (ev) {
       console.log('clickHandle:', ev)
       // throw {message: 'custom test'}
-    }
+    },
+  onChangeTab(event) {
+    this.active=event.mp.detail;
+  }
   },
 
   created () {

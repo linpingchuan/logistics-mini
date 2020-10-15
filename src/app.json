@@ -1,13 +1,14 @@
 {
   "pages": [
+    "pages/index/main",
     "pages/recharge/main",
-    "pages/logs/main",
-    "pages/counter/main"
+    "pages/order/main",
+    "pages/login/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
+    "navigationBarTitleText": "虾皮货代就找盛夏物流",
     "navigationBarTextStyle": "black"
   }
 }

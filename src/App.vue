@@ -22,8 +22,6 @@ export default {
       logs = mpvue.getStorageSync('logs') || []
       logs.unshift(Date.now())
       mpvue.setStorageSync('logs', logs)
-
-      
     }
   },
   log () {

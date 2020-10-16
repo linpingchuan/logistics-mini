@@ -5,7 +5,7 @@
     "pages/login/main"
   ],
   "window": {
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "虾皮货代就找盛夏物流",
     "navigationBarTextStyle": "black"

@@ -13,19 +13,20 @@
             <van-card :num="orderItem.variationQuantityPurchased" :price="orderItem.variationOriginalPrice"
               :desc="orderItem.desc" :title="orderItem.itemName" :thumb="orderItem.itemImage"
               :tag="orderItem.signStatusDesc">
-              <view slot="footer">
-                <van-button type="info" size="mini" v-if="!orderItem.logisticsNumber"
-                  @click="onInputLogisticsNumber(orderItem.id)">提交快递单号</van-button>
-                <van-button type="warning" size="mini" v-if="orderItem.logisticsNumber && order.packStatus!='全部已打包'"
-                  @click="onInputLogisticsNumber(orderItem.id)">修改快递单号</van-button>
-              </view>
+
             </van-card>
           </div>
         </view>
         <view slot="footer">
           <div style="display:flex;justify-content:flex-end;">
-            <van-button size="small" round type="info" @click="copyOrderSn(order.orderSn)">复制订单编号
+            <van-button size="mini" type="primary" @click="copyOrderSn(order.orderSn)" style="margin: 0 4px;">复制订单编号
             </van-button>
+            <van-button type="info" size="mini" v-if="!order.packStatus"
+              @click="onOpenOrderDetail(order.orderSn,order.shopId)" style="margin: 0 4px;">
+              提交快递单号</van-button>
+            <van-button type="warning" size="mini" v-if="order.packStatus=='待打包'"
+              @click="onOpenOrderDetail(order.orderSn,order.shopId)" style="margin: 0 4px;">
+              修改快递单号</van-button>
           </div>
         </view>
       </van-panel>
@@ -46,6 +47,7 @@
         params: [],
         show: false,
         logisticsNumber: '',
+        orderSn: ''
       }
     },
     mounted() {
@@ -84,11 +86,11 @@
 
     },
     methods: {
-      onConfirmCompany() {
-
-      },
-      onCancel() {
-        this.showCompanyList = false;
+      onOpenOrderDetail(orderSn, shopId) {
+        this.orderSn = orderSn;
+        mpvue.navigateTo({
+          url: '/pages/order-detail/main?orderSn=' + this.orderSn + "&shopId=" + shopId
+        })
       },
       copyOrderSn(orderSn) {
         let text = orderSn;
@@ -122,7 +124,10 @@
           data: this.params,
           success: (res) => {
             let data = res.data;
-            this.orders = data.data.content;
+            if (data.data.content) {
+              this.orders = this.orders.concat(data.data.content);
+            }
+
             for (let order of this.orders) {
               order.desc = "店铺：" + order.shopName + "【" + order.country + "】"
               if (order.shopOrderItems) {

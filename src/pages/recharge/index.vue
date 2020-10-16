@@ -81,9 +81,31 @@ export default {
    
     onClickLogout(){
       wx.setStorageSync('accountKey',null);
-      mpvue.redirectTo({
+      wx.login({
+        success(res){
+          if(res.code){
+            wx.request({
+                url:utils.host+'/logout',
+                method:'PUT',
+                data:{
+                  code:res.code
+                },
+                header: {
+                  'content-type': 'application/x-www-form-urlencoded',
+                },
+                success:(res)=>{
+                  if(res.data.content){
+                      mpvue.redirectTo({
                             url:'/pages/login/main'
-                          })
+                      })
+                  }
+                  
+                }
+            })
+          }
+        }
+      });
+      
     },
     copyInvitationCode(){
       let text="虾皮货代就找盛夏物流（https://l.foreverhot.icu），安全靠谱（请在电脑端进行操作吧！）。快快加入我们，我的邀请码: "+this.account.invitationCode

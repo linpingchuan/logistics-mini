@@ -121,10 +121,7 @@ export default {
                 Notify(res.content)
               }else{
                 wx.setStorageSync('accountKey',res.data)
-                wx.redirectTo({
-                  url:'/pages/recharge/main'
-                })
-
+                wx.switchTab({url:'/pages/recharge/main'})
               }
           }
       })

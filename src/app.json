@@ -1,6 +1,5 @@
 {
   "pages": [
-    "pages/index/main",
     "pages/recharge/main",
     "pages/order/main",
     "pages/login/main"
@@ -10,5 +9,26 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "虾皮货代就找盛夏物流",
     "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#000",
+    "backgroundColor": "#fff",
+    "selectedColor": "#409eff",
+    "borderStyle": "white",
+    "list": [
+      {
+        "text": "充值",
+        "pagePath": "pages/recharge/main",
+        "iconPath": "static/tabs/money.png",
+        "selectedIconPath": "static/tabs/money-active.png"
+      },
+      {
+        "text": "订单",
+        "pagePath": "pages/order/main",
+        "iconPath": "static/tabs/orders.png",
+        "selectedIconPath": "static/tabs/orders-active.png"
+      }
+    ],
+    "position": "bottom"
   }
 }

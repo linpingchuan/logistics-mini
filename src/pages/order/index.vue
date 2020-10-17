@@ -29,11 +29,12 @@
         active: 0
       }
     },
-    mounted() {},
+    mounted() {
+    },
     components: {
       OrderList
     },
-    
+
     onShareAppMessage(res) {
       return {
         title: '虾皮货代就找盛夏物流，安全靠谱，快来一起大卖吧！',
@@ -53,8 +54,7 @@
         this.active = event.detail;
       }
     },
-    created() {
-    }
+    created() {}
   }
 
 </script>

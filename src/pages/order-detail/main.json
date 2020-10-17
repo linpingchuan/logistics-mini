@@ -20,7 +20,8 @@
         "van-tabs": "/static/vant/tabs/index",
         "van-card": "/static/vant/card/index",
         "van-divider": "/static/vant/divider/index",
-        "van-submit-bar": "/static/vant/submit-bar/index"
+        "van-submit-bar": "/static/vant/submit-bar/index",
+        "van-switch": "/static/vant/switch/index"
     },
     "enablePullDownRefresh": true
 }

@@ -1,5 +1,6 @@
 <template>
   <div class="order-list-container">
+
     <div v-for="(order,index) in orders" :key="order.orderSn" :index="index" class="order-container">
       <van-panel :title="order.orderSn" :desc="order.desc" use-footer-slot>
         <view>
@@ -7,7 +8,6 @@
             <van-card :num="orderItem.variationQuantityPurchased" :price="orderItem.variationOriginalPrice"
               :desc="orderItem.desc" :title="orderItem.itemName" :thumb="orderItem.itemImage"
               :tag="orderItem.signStatusDesc">
-
             </van-card>
           </div>
         </view>
@@ -18,9 +18,9 @@
             <van-button type="info" size="mini" v-if="!order.packStatus"
               @click="onOpenOrderDetail(order.orderSn,order.shopId)" style="margin: 0 4px;">
               提交快递单号</van-button>
-            <van-button type="warning" size="mini" v-if="order.packStatus=='待打包'"
+            <!-- <van-button type="warning" size="mini" v-if="order.packStatus=='待打包'"
               @click="onOpenOrderDetail(order.orderSn,order.shopId)" style="margin: 0 4px;">
-              修改快递单号</van-button>
+              修改快递单号</van-button> -->
           </div>
         </view>
       </van-panel>
@@ -45,51 +45,54 @@
       }
     },
     mounted() {
-      this.orders = [];
-      let accountKey = wx.getStorageSync('accountKey')
-      if (accountKey) {
-        if (this.orderType == 0) {
-          this.params = {
-            wxOnlineKey: accountKey,
-            page: this.page,
-            "shopeeOrderStatus": ["READY_TO_SHIP"],
-            "packUpOrder": true,
-            "hotLogisticsStatus": [],
-            "shopValue": []
-          }
-        }
-        if (this.orderType == 1) {
-          this.params = {
-            wxOnlineKey: accountKey,
-            page: this.page,
-            "shopeeOrderStatus": ["READY_TO_SHIP"],
-            "packStatus": ["ready"],
-            "shopValue": [],
-            "supplierStatus": null
-          }
-        }
-        if (this.orderType == 2) {
-          this.params = {
-            wxOnlineKey: accountKey,
-            page: this.page,
-            "packStatus": ["all"],
-            "shopValue": []
-          }
-        }
-        this.onRefreshOrder();
-      }
+      this.onRefreshList();
     },
-    // onPullDownRefresh() {
-    //   this.page = this.page + 1;
-    //   this.onRefreshList();
-    // },
-    // onReachBottom() {
-    //   this.page = this.page == 0 ? 0 : this.page - 1;
-    //   this.onRefreshLIst()
-    // },
+    onLoad() {
+      this.onRefreshList();
+    },
+    onPullDownRefresh() {
+      this.page = this.page + 1;
+      this.onRefreshList();
+    },
+    onReachBottom() {
+      this.page = this.page == 0 ? 0 : this.page - 1;
+      this.onRefreshList()
+    },
     methods: {
       onRefreshList() {
-
+        this.orders = [];
+        let accountKey = wx.getStorageSync('accountKey')
+        if (accountKey) {
+          if (this.orderType == 0) {
+            this.params = {
+              wxOnlineKey: accountKey,
+              page: this.page,
+              "shopeeOrderStatus": ["READY_TO_SHIP"],
+              "packUpOrder": true,
+              "hotLogisticsStatus": [],
+              "shopValue": []
+            }
+          }
+          if (this.orderType == 1) {
+            this.params = {
+              wxOnlineKey: accountKey,
+              page: this.page,
+              "shopeeOrderStatus": ["READY_TO_SHIP"],
+              "packStatus": ["ready"],
+              "shopValue": [],
+              "supplierStatus": null
+            }
+          }
+          if (this.orderType == 2) {
+            this.params = {
+              wxOnlineKey: accountKey,
+              page: this.page,
+              "packStatus": ["all"],
+              "shopValue": []
+            }
+          }
+          this.onRefreshOrder();
+        }
       },
       onOpenOrderDetail(orderSn, shopId) {
         this.orderSn = orderSn;
@@ -119,25 +122,29 @@
           data: this.params,
           success: (res) => {
             let data = res.data;
-            for (let order of this.orders) {
-              order.desc = "店铺：" + order.shopName + "【" + order.country + "】"
-              if (order.shopOrderItems) {
-                for (let orderItem of order.shopOrderItems) {
-                  if (orderItem.logisticsNumber) {
-                    orderItem.desc = orderItem.logisticsNumber + '【' + orderItem
-                      .logisticsTransfer + '】'
-                    if (order.packStatus) {
-                      if (!orderItem.signInStatus) {
-                        orderItem.signStatusDesc = "未签收"
-                      } else {
-                        orderItem.signStatusDesc = "已签收"
+            if (this.orders.length == 0) {
+              this.orders = data.data.content;
+            }
+            if (this.orders)
+              for (let order of this.orders) {
+                order.desc = "店铺：" + order.shopName + "【" + order.country + "】"
+                if (order.shopOrderItems) {
+                  for (let orderItem of order.shopOrderItems) {
+                    if (orderItem.logisticsNumber) {
+                      orderItem.desc = orderItem.logisticsNumber + '【' + orderItem
+                        .logisticsTransfer + '】'
+                      if (order.packStatus) {
+                        if (!orderItem.signInStatus) {
+                          orderItem.signStatusDesc = "未签收"
+                        } else {
+                          orderItem.signStatusDesc = "已签收"
+                        }
                       }
                     }
                   }
                 }
-              }
 
-            }
+              }
           }
         })
 

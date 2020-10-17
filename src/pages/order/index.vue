@@ -53,9 +53,7 @@
         this.active = event.detail;
       }
     },
-
     created() {
-      // let app = getApp()
     }
   }
 

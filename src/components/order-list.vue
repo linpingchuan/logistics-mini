@@ -1,11 +1,5 @@
 <template>
   <div class="order-list-container">
-
-    <van-dialog use-slot title="快递" :show="show" show-cancel-button @close="onClose" @confirm="updateLogisticsNumber">
-      <van-cell-group style="margin:4px 0;">
-        <van-field :value="logistics" required clearable label="单号" placeholder="请输入正确的快递单号" />
-      </van-cell-group>
-    </van-dialog>
     <div v-for="(order,index) in orders" :key="order.orderSn" :index="index" class="order-container">
       <van-panel :title="order.orderSn" :desc="order.desc" use-footer-slot>
         <view>
@@ -51,6 +45,7 @@
       }
     },
     mounted() {
+      this.orders = [];
       let accountKey = wx.getStorageSync('accountKey')
       if (accountKey) {
         if (this.orderType == 0) {
@@ -83,9 +78,19 @@
         }
         this.onRefreshOrder();
       }
-
     },
+    // onPullDownRefresh() {
+    //   this.page = this.page + 1;
+    //   this.onRefreshList();
+    // },
+    // onReachBottom() {
+    //   this.page = this.page == 0 ? 0 : this.page - 1;
+    //   this.onRefreshLIst()
+    // },
     methods: {
+      onRefreshList() {
+
+      },
       onOpenOrderDetail(orderSn, shopId) {
         this.orderSn = orderSn;
         mpvue.navigateTo({
@@ -107,16 +112,6 @@
           }
         })
       },
-      updateLogisticsNumber() {
-
-      },
-      onClose() {
-        this.show = false;
-      },
-      onInputLogisticsNumber(orderItemId) {
-        this.show = true;
-        this.orderItemId = this.ordreItemId;
-      },
       onRefreshOrder() {
         wx.request({
           url: utils.host + '/shop-order-list',
@@ -124,10 +119,6 @@
           data: this.params,
           success: (res) => {
             let data = res.data;
-            if (data.data.content) {
-              this.orders = this.orders.concat(data.data.content);
-            }
-
             for (let order of this.orders) {
               order.desc = "店铺：" + order.shopName + "【" + order.country + "】"
               if (order.shopOrderItems) {

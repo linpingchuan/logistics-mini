@@ -78,7 +78,6 @@ export default {
     }
   },
   methods: {
-   
     onClickLogout(){
       wx.setStorageSync('accountKey',null);
       wx.login({

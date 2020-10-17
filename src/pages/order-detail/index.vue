@@ -28,13 +28,30 @@
       this.params.orderSn = options.orderSn;
       this.params.shopId = options.shopId;
       let accountKey = wx.getStorageSync('accountKey');
-      this.params.accountKey = accountKey;
+      this.params.wxOnlineKey = accountKey;
       wx.request({
         url: utils.host + '/shop-order-detail',
         method: 'POST',
         data: this.params,
         success: (res) => {
-          this.order = res.data.data;
+          let order = res.data.data;
+          order.desc = "店铺：" + order.shopName + "【" + order.country + "】"
+          if (order.shopOrderItems) {
+            for (let orderItem of order.shopOrderItems) {
+              if (orderItem.logisticsNumber) {
+                orderItem.desc = orderItem.logisticsNumber + '【' + orderItem
+                  .logisticsTransfer + '】'
+                if (order.packStatus) {
+                  if (!orderItem.signInStatus) {
+                    orderItem.signStatusDesc = "未签收"
+                  } else {
+                    orderItem.signStatusDesc = "已签收"
+                  }
+                }
+              }
+            }
+          }
+          this.order = order;
           console.log(this.order)
         }
       });

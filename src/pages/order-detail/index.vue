@@ -7,37 +7,36 @@
         <van-loading size="24px">提交中...</van-loading>
       </div>
     </van-overlay>
-    <van-panel :title="order.orderSn" :desc="order.desc" use-footer-slot>
-      <view>
-        <div v-for="(orderItem,orderItemIndex) in order.shopOrderItems" :key="orderItem.id" :index="orderItemIndex">
-          <van-card :num="orderItem.variationQuantityPurchased" :price="orderItem.variationOriginalPrice"
-            :desc="orderItem.desc" :title="orderItem.itemName" :thumb="orderItem.itemImage"
-            :tag="orderItem.signStatusDesc">
-            <view slot="footer">
-              <van-cell-group>
-                <van-field required clearable label="快递单号" :value="orderItem.logisticsNumber" autosize
-                  :disabled="orderItem.logisticsTransfer=='平台中转仓'"
-                  @input="orderItem.logisticsNumber=$event.mp.detail" />
-              </van-cell-group>
-            </view>
-          </van-card>
-        </div>
-      </view>
-      <view slot="footer">
-        <div style="display:flex;justify-content:space-between;">
-          <p style="width: 6.2em;margin-right: 12px;color: #646566;text-align: left;">泡沫加固</p>
-          <van-switch :checked="foamChecked" size="24px" @change="onChangeFoamChecked" />
-        </div>
-        <div style="display:flex;justify-content:space-between;">
-          <p style="width: 6.2em;margin-right: 12px;color: #646566;text-align: left;">纸箱加固</p>
-          <van-switch :checked="boxChecked" size="24px" @change="onChangeBoxChecked" />
-        </div>
-      </view>
-    </van-panel>
-    <div>
-
-
+    <div style="margin-bottom: 100px;">
+      <van-panel :title="order.orderSn" :desc="order.desc" use-footer-slot>
+        <view>
+          <div v-for="(orderItem,orderItemIndex) in order.shopOrderItems" :key="orderItem.id" :index="orderItemIndex">
+            <van-card :num="orderItem.variationQuantityPurchased" :price="orderItem.variationOriginalPrice"
+              :desc="orderItem.desc" :title="orderItem.itemName" :thumb="orderItem.itemImage"
+              :tag="orderItem.signStatusDesc">
+              <view slot="footer">
+                <van-cell-group>
+                  <van-field required clearable label="快递单号" :value="orderItem.logisticsNumber" autosize
+                    :disabled="orderItem.logisticsTransfer=='平台中转仓'" @input="orderItem.logisticsNumber=$event.mp.detail"
+                    placeholder="请输入快递单号" />
+                </van-cell-group>
+              </view>
+            </van-card>
+          </div>
+        </view>
+        <view slot="footer">
+          <div style="display:flex;justify-content:space-between;">
+            <p style="width: 6.2em;margin-right: 12px;color: #646566;text-align: left;">泡沫加固</p>
+            <van-switch :checked="foamChecked" size="24px" @change="onChangeFoamChecked" />
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <p style="width: 6.2em;margin-right: 12px;color: #646566;text-align: left;">纸箱加固</p>
+            <van-switch :checked="boxChecked" size="24px" @change="onChangeBoxChecked" />
+          </div>
+        </view>
+      </van-panel>
     </div>
+
     <van-submit-bar :price="cost" label="预扣费" :tip="tip" button-text="提交" @submit="onSubmit" />
   </div>
 </template>
@@ -61,6 +60,9 @@
       }
     },
     onLoad(options) {
+      this.showOverLay = false;
+      this.foamChecked = false;
+      this.boxChecked = false;
       this.params.orderSn = options.orderSn;
       this.params.shopId = options.shopId;
       let accountKey = wx.getStorageSync('accountKey');
@@ -130,10 +132,7 @@
             }
             if (!orderItem.logisticsNumber || orderItem.logisticsNumber.trim() == '') {
               this.showOverLay = false;
-              Notify({
-                type: 'danger',
-                message: '快递单号未填写完整'
-              });
+              Notify('快递单号未填写完整');
               return;
             }
             if (orderItem.logisticsTransfer != '平台中转仓' && orderItem.logisticsNumber.trim() == '无需填写快递单，使用已寄存商品') {
@@ -151,22 +150,22 @@
             if (res.content) {
               if (res.content.indexOf("寄存数量已用完") > 0) {
                 that.showOverLay = false;
-                mpvue.navigateTo({
-                  url: '/pages/order-detail/main?orderSn=' + that.order.orderSn + "&shopId=" + that.order
-                    .shopId
-                })
-              } else {
-                that.showOverLay = false;
                 Notify({
                   type: 'danger',
                   message: res.content
                 });
+              } else {
+                that.showOverLay = false;
+                Notify(res.content);
               }
             } else {
+              that.showOverLay = false;
+              that.foamChecked = false;
+              that.boxChecked = false;
               wx.switchTab({
                 url: '/pages/order/main',
                 success: function () {
-                  let page = getCurrentPages().pop();
+                  let page = getCurrentPages()[0];
                   if (page) {
                     page.onLoad();
                   }
